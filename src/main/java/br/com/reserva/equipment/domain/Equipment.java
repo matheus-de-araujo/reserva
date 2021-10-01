@@ -1,4 +1,4 @@
-package br.com.reserva.user.domain;
+package br.com.reserva.equipment.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,10 +18,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
-public class User implements Serializable {
+public class Equipment implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-    private String cpf;
+    private String status;
+    private String model;
 }
