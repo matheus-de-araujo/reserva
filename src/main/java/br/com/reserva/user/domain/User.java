@@ -1,19 +1,12 @@
 package br.com.reserva.user.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import br.com.reserva.reserve.domain.Reserve;
+import lombok.*;
 import java.io.Serializable;
+import java.util.List;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -24,4 +17,30 @@ public class User implements Serializable {
     private long id;
     private String name;
     private String cpf;
+    @OneToMany
+    private List<Reserve> reserves;
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Reserve> getReserves() {
+        return reserves;
+    }
+
+    public void setReserves(List<Reserve> reserves) {
+        this.reserves = reserves;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
