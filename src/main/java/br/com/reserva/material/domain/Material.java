@@ -2,6 +2,7 @@ package br.com.reserva.material.domain;
 
 import javax.persistence.*;
 
+import br.com.reserva.category.domain.Category;
 import lombok.*;
 import java.io.Serializable;
 
@@ -18,10 +19,22 @@ public class Material implements Serializable {
     private float reserved_qty;
     private float total_qty;
 
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name="category_id", referencedColumnName = "id")
+    private Category category;
+
     public String getName() {
         return name;
     }
     
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public float getTotal_qty() {
         return total_qty;
     }

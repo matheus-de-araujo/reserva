@@ -2,6 +2,7 @@ package br.com.reserva.room.domain;
 
 import javax.persistence.*;
 
+import br.com.reserva.category.domain.Category;
 import lombok.*;
 import java.io.Serializable;
 
@@ -14,18 +15,30 @@ public class Room implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private long room_number;
-    private String floor;
+    private long floor;
     private String type;
+
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name="category_id", referencedColumnName = "id")
+    private Category category;
     
     public long getRoom_number() {
         return room_number;
     }
-    
-    public String getFloor() {
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Long getFloor() {
         return floor;
     }
 
-    public void setFloor(String floor) {
+    public void setFloor(Long floor) {
         this.floor = floor;
     }
 

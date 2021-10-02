@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 import br.com.reserva.user.domain.User;
 import lombok.*;
-import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -17,6 +16,7 @@ public class Reserve implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private LocalDate booking_date;
+
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
