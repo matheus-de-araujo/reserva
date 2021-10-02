@@ -55,4 +55,14 @@ public class RoomController {
         }
     }
 
+    @PutMapping(path = "/{roomId}/categories/{categoryId}")
+    public @ResponseBody ResponseEntity<?> AssignCategoryToRoom(
+            @PathVariable Long roomId, @PathVariable Long categoryId)
+        {
+        try {
+            return service.assignCategory(roomId, categoryId);
+        } catch (Exception e) {
+            return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
 }

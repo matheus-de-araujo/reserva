@@ -53,9 +53,9 @@ public class MaterialService {
         return ResponseEntity.ok("Excluído com Sucesso!");
     }
 
-    public ResponseEntity<?> assignCategory(Long materialId, Long categorysId){
+    public ResponseEntity<?> assignCategory(Long materialId, Long categoryId){
         Material material = materialRepository.findById(materialId).get();
-        Category category = categoryRepository.findById(categorysId).get();
+        Category category = categoryRepository.findById(categoryId).get();
 
         material.setCategory(category);
         Material saved = materialRepository.save(material);

@@ -55,4 +55,14 @@ public class EquipmentController {
         }
     }
 
+    @PutMapping(path = "/{equipmentId}/categories/{categoryId}")
+    public @ResponseBody ResponseEntity<?> AssignCategoryToEquipment(
+            @PathVariable Long equipmentId, @PathVariable Long categoryId)
+        {
+        try {
+            return service.assignCategory(equipmentId, categoryId);
+        } catch (Exception e) {
+            return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
 }

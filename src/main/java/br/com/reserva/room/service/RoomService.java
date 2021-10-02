@@ -1,7 +1,9 @@
 package br.com.reserva.room.service;
 
 import br.com.reserva.room.domain.Room;
+import br.com.reserva.category.domain.Category;
 import br.com.reserva.room.repository.RoomRepository;
+import br.com.reserva.category.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -9,7 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomService {
 
-    private final RoomRepository roomRepository;
+    @Autowired
+    RoomRepository roomRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Autowired
     public RoomService(RoomRepository roomRepository) {
@@ -44,5 +50,15 @@ public class RoomService {
     public ResponseEntity<?> delete(Long id){
         roomRepository.deleteById(id);
         return ResponseEntity.ok("Excluído com Sucesso!");
+    }
+
+    public ResponseEntity<?> assignCategory(Long roomId, Long categoryId){
+        Room room = roomRepository.findById(roomId).get();
+        Category category = categoryRepository.findById(categoryId).get();
+
+        room.setCategory(category);
+        Room saved = roomRepository.save(room);
+
+        return ResponseEntity.ok(saved);
     }
 }

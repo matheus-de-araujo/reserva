@@ -56,16 +56,14 @@ public class MaterialController {
         }
     }
 
-    @PutMapping(path = "/{materialId}/category/{categorysId}")
+    @PutMapping(path = "/{materialId}/categories/{categoryId}")
     public @ResponseBody ResponseEntity<?> AssignCategoryToMaterial(
-            @PathVariable(name = "MaterialId") Long materialId,
-            @PathVariable(name = "categoriesId") Long categorysId)
+            @PathVariable Long materialId, @PathVariable Long categoryId)
         {
         try {
-            return service.assignCategory(materialId, categorysId);
+            return service.assignCategory(materialId, categoryId);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
-
 }

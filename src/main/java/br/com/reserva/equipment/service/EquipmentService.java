@@ -1,6 +1,8 @@
 package br.com.reserva.equipment.service;
 
 import br.com.reserva.equipment.domain.Equipment;
+import br.com.reserva.category.repository.CategoryRepository;
+import br.com.reserva.category.domain.Category;
 import br.com.reserva.equipment.repository.EquipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class EquipmentService {
 
-    private final EquipmentRepository equipmentRepository;
+    private final 
+
+    @Autowired
+    EquipmentRepository equipmentRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Autowired
     public EquipmentService(EquipmentRepository equipmentRepository) {
@@ -45,5 +53,15 @@ public class EquipmentService {
     public ResponseEntity<?> delete(Long id){
         equipmentRepository.deleteById(id);
         return ResponseEntity.ok("Excluído com Sucesso!");
+    }
+
+    public ResponseEntity<?> assignCategory(Long equipmentId, Long categoryId){
+        Equipment equipment = equipmentRepository.findById(equipmentId).get();
+        Category category = categoryRepository.findById(categoryId).get();
+
+        equipment.setCategory(category);
+        Equipment saved = equipmentRepository.save(equipment);
+
+        return ResponseEntity.ok(saved);
     }
 }

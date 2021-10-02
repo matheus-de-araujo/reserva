@@ -2,6 +2,8 @@ package br.com.reserva.category.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.reserva.room.domain.Room;
 import br.com.reserva.material.domain.Material;
 import br.com.reserva.equipment.domain.Equipment;
@@ -19,12 +21,15 @@ public class Category implements Serializable {
     private long id;
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Room> room;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Material> material;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private List<Equipment> equipment;
     
