@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "categories")
 public class CategoryController {
 
-    private final CategoryService service;
+    @Autowired
+    CategoryService service;
 
     @Autowired
     public CategoryController(CategoryService categoryService) {

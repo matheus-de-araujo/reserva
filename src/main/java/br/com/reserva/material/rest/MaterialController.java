@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "materials")
 public class MaterialController {
 
-    private final MaterialService service;
+    @Autowired
+    MaterialService service;
 
     @Autowired
     public MaterialController(MaterialService materialService) {
@@ -50,6 +51,18 @@ public class MaterialController {
     public @ResponseBody ResponseEntity<?> delete(@PathVariable(name = "id") Long id){
         try {
             return service.delete(id);
+        } catch (Exception e) {
+            return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @PutMapping(path = "/{materialId}/category/{categorysId}")
+    public @ResponseBody ResponseEntity<?> AssignCategoryToMaterial(
+            @PathVariable(name = "MaterialId") Long materialId,
+            @PathVariable(name = "categoriesId") Long categorysId)
+        {
+        try {
+            return service.assignCategory(materialId, categorysId);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }

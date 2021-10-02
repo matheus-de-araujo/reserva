@@ -1,7 +1,9 @@
 package br.com.reserva.material.service;
 
 import br.com.reserva.material.domain.Material;
+import br.com.reserva.category.domain.Category;
 import br.com.reserva.material.repository.MaterialRepository;
+import br.com.reserva.category.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -9,7 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class MaterialService {
 
-    private final MaterialRepository materialRepository;
+    @Autowired
+    MaterialRepository materialRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Autowired
     public MaterialService(MaterialRepository materialRepository) {
@@ -45,5 +51,15 @@ public class MaterialService {
     public ResponseEntity<?> delete(Long id){
         materialRepository.deleteById(id);
         return ResponseEntity.ok("Excluído com Sucesso!");
+    }
+
+    public ResponseEntity<?> assignCategory(Long materialId, Long categorysId){
+        Material material = materialRepository.findById(materialId).get();
+        Category category = categoryRepository.findById(categorysId).get();
+
+        material.setCategory(category);
+        Material saved = materialRepository.save(material);
+
+        return ResponseEntity.ok(saved);
     }
 }
