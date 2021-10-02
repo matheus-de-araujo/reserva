@@ -4,7 +4,7 @@ import br.com.reserva.room.domain.Room;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-@RepositoryRestResource(path = "room")
+@RepositoryRestResource(path = "rooms")
 public interface RoomRepository extends CrudRepository<Room, Long> {
 
 }
