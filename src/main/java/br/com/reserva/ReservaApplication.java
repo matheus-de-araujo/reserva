@@ -30,14 +30,13 @@ public class ReservaApplication {
 	InitializingBean sendDatabase() {
 		User user = new User();
 		user.setName("Matheus");
-		user.setCpf("01446294102");
+		user.setCpf("75737302172");
+		userRepository.save(user);
 		
 		Reserve reserve = new Reserve();
 		reserve.setBooking_date(LocalDate.of(2021,02,01));
-		
-		userRepository.save(user);
-		reserve.setUser(user);
 		reserveRepository.save(reserve);
+
 		return null;
 	}
 

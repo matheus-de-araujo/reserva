@@ -1,46 +1,46 @@
-package br.com.reserva.user.rest;
+package br.com.reserva.material.rest;
 
-import br.com.reserva.user.domain.User;
-import br.com.reserva.user.service.UserService;
+import br.com.reserva.material.domain.Material;
+import br.com.reserva.material.service.MaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RepositoryRestController
-@RequestMapping(path = "users")
-public class UserController {
+@RequestMapping(path = "materials")
+public class MaterialController {
 
-    private final UserService service;
+    private final MaterialService service;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.service = userService;
+    public MaterialController(MaterialService materialService) {
+        this.service = materialService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
-    public @ResponseBody ResponseEntity<?> findAllUser(){
+    public @ResponseBody ResponseEntity<?> findAllMaterial(){
         try {
-            Iterable<User> users = service.findAll();
-            return ResponseEntity.ok(users);
+            Iterable<Material> materials = service.findAll();
+            return ResponseEntity.ok(materials);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody ResponseEntity<?> saveUser(@RequestBody User user){
+    public @ResponseBody ResponseEntity<?> saveMaterial(@RequestBody Material material){
         try {
-            return service.save(user);
+            return service.save(material);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
     @PutMapping(path = "/edit/{id}")
-    public @ResponseBody ResponseEntity<?> update(@RequestBody User user, @PathVariable(name = "id") Long id){
+    public @ResponseBody ResponseEntity<?> update(@RequestBody Material material, @PathVariable(name = "id") Long id){
         try {
-            return service.update(user, id);
+            return service.update(material, id);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }

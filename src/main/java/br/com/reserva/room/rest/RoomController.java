@@ -1,46 +1,46 @@
-package br.com.reserva.user.rest;
+package br.com.reserva.room.rest;
 
-import br.com.reserva.user.domain.User;
-import br.com.reserva.user.service.UserService;
+import br.com.reserva.room.domain.Room;
+import br.com.reserva.room.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RepositoryRestController
-@RequestMapping(path = "users")
-public class UserController {
+@RequestMapping(path = "rooms")
+public class RoomController {
 
-    private final UserService service;
+    private final RoomService service;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.service = userService;
+    public RoomController(RoomService roomService) {
+        this.service = roomService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
-    public @ResponseBody ResponseEntity<?> findAllUser(){
+    public @ResponseBody ResponseEntity<?> findAllRoom(){
         try {
-            Iterable<User> users = service.findAll();
-            return ResponseEntity.ok(users);
+            Iterable<Room> rooms = service.findAll();
+            return ResponseEntity.ok(rooms);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody ResponseEntity<?> saveUser(@RequestBody User user){
+    public @ResponseBody ResponseEntity<?> saveRoom(@RequestBody Room room){
         try {
-            return service.save(user);
+            return service.save(room);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
     @PutMapping(path = "/edit/{id}")
-    public @ResponseBody ResponseEntity<?> update(@RequestBody User user, @PathVariable(name = "id") Long id){
+    public @ResponseBody ResponseEntity<?> update(@RequestBody Room room, @PathVariable(name = "id") Long id){
         try {
-            return service.update(user, id);
+            return service.update(room, id);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }

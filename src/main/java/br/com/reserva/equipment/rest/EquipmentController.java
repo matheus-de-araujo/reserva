@@ -1,46 +1,46 @@
-package br.com.reserva.user.rest;
+package br.com.reserva.equipment.rest;
 
-import br.com.reserva.user.domain.User;
-import br.com.reserva.user.service.UserService;
+import br.com.reserva.equipment.domain.Equipment;
+import br.com.reserva.equipment.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RepositoryRestController
-@RequestMapping(path = "users")
-public class UserController {
+@RequestMapping(path = "equipments")
+public class EquipmentController {
 
-    private final UserService service;
+    private final EquipmentService service;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.service = userService;
+    public EquipmentController(EquipmentService equipmentService) {
+        this.service = equipmentService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/list")
-    public @ResponseBody ResponseEntity<?> findAllUser(){
+    public @ResponseBody ResponseEntity<?> findAllEquipment(){
         try {
-            Iterable<User> users = service.findAll();
-            return ResponseEntity.ok(users);
+            Iterable<Equipment> equipments = service.findAll();
+            return ResponseEntity.ok(equipments);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
     @PostMapping(path = "/add")
-    public @ResponseBody ResponseEntity<?> saveUser(@RequestBody User user){
+    public @ResponseBody ResponseEntity<?> saveEquipment(@RequestBody Equipment equipment){
         try {
-            return service.save(user);
+            return service.save(equipment);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
 
     @PutMapping(path = "/edit/{id}")
-    public @ResponseBody ResponseEntity<?> update(@RequestBody User user, @PathVariable(name = "id") Long id){
+    public @ResponseBody ResponseEntity<?> update(@RequestBody Equipment equipment, @PathVariable(name = "id") Long id){
         try {
-            return service.update(user, id);
+            return service.update(equipment, id);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }

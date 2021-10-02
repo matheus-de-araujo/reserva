@@ -17,7 +17,8 @@ public class Reserve implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private LocalDate booking_date;
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
     public LocalDate getBooking_date() {
@@ -34,5 +35,13 @@ public class Reserve implements Serializable {
 
     public void setBooking_date(LocalDate booking_date) {
         this.booking_date = booking_date;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

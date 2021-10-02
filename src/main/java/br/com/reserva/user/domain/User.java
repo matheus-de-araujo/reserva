@@ -17,7 +17,7 @@ public class User implements Serializable {
     private long id;
     private String name;
     private String cpf;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Reserve> reserves;
 
     public String getName() {
@@ -42,5 +42,13 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

@@ -24,19 +24,22 @@ public class UserService {
     }
 
 
-    public User save(User user){
+    public ResponseEntity<?> save(User user){
         boolean cpfValido = false;
         cpfValido = validaCPF(user.getCpf());
-        if(cpfValido) {
-            return userRepository.save(user);
-        }else{
-            return null;
+
+        if(!cpfValido) {
+            ResponseEntity.status(400).body("Cpf Inválido!!!");
         }
+
+        User saved = userRepository.save(user);
+        return ResponseEntity.ok(saved);
     }
 
     public ResponseEntity<?> update(User user, Long id){
         boolean cpfValido = false;
         cpfValido = validaCPF(user.getCpf());
+
         if(!cpfValido) {
             ResponseEntity.status(400).body("Cpf Inválido!!!");
         }
@@ -54,12 +57,8 @@ public class UserService {
 
 
     public ResponseEntity<?> delete(Long id){
-        try {
-            userRepository.deleteById(id);
-            return ResponseEntity.ok("Excluído com Sucesso!");
-        }catch (Exception e){
-            return (ResponseEntity<?>) ResponseEntity.status(500);
-        }
+        userRepository.deleteById(id);
+        return ResponseEntity.ok("Excluído com Sucesso!");
     }
 
     public boolean validaCPF(String CPF){
