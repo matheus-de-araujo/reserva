@@ -7,7 +7,8 @@ import br.com.reserva.category.repository.CategoryRepository;
 import br.com.reserva.user.domain.User;
 import br.com.reserva.user.repository.UserRepository;
 import br.com.reserva.reserve.domain.Reserve;
-import br.com.reserva.reserve.repository.ReserveRepository;
+import br.com.reserva.reserve.service.ReserveService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class EquipmentService {
     UserRepository userRepository;
 
     @Autowired
-    ReserveRepository ReserveRepository;
+    ReserveService reserveService;
 
     @Autowired
     public EquipmentService(EquipmentRepository equipmentRepository) {
@@ -75,16 +76,11 @@ public class EquipmentService {
         return ResponseEntity.ok(saved);
     }
 
-    public ResponseEntity<?> CreateReserve(Long equipmentId, Long userId, Reserve reserveDate){
+    public ResponseEntity<?> CreateReserve(Long equipmentId, Long userId, Reserve dateTime){
         Equipment equipment = equipmentRepository.findById(equipmentId).get();
         User user = userRepository.findById(userId).get();
-        Reserve reserve = new Reserve();
 
-        reserve.setBooking_date(reserveDate.getBooking_date());
-        reserve.setBooking_hour(reserveDate.getBooking_hour());
-        reserve.setUser(user);
-        reserve.setEquipment(equipment);
-        Reserve saved = ReserveRepository.save(reserve);
+        Reserve saved = reserveService.CreateReserve(user, dateTime, null, equipment, null);
 
         equipment.setReserve(saved);
 

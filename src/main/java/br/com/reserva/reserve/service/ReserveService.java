@@ -1,6 +1,10 @@
 package br.com.reserva.reserve.service;
 
+import br.com.reserva.equipment.domain.Equipment;
+import br.com.reserva.material.domain.Material;
 import br.com.reserva.reserve.domain.Reserve;
+import br.com.reserva.user.domain.User;
+import br.com.reserva.room.domain.Room;
 import br.com.reserva.reserve.repository.ReserveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +44,27 @@ public class ReserveService {
     public ResponseEntity<?> delete(Long id){
         reserveRepository.deleteById(id);
         return ResponseEntity.ok("Excluído com Sucesso!");
+    }
+
+    public Reserve CreateReserve(User user, Reserve dateTime, Room room, Equipment equipment, Material material){
+        Reserve reserve = new Reserve();
+        reserve.setBooking_date(dateTime.getBooking_date());
+        reserve.setBooking_hour(dateTime.getBooking_hour());
+        reserve.setUser(user);
+
+        if(room != null) {
+            reserve.setRoom(room);
+        }
+
+        if(equipment != null) {
+            reserve.setEquipment(equipment);
+        }
+
+        if(material != null) {
+            reserve.setMaterial(material);
+        }
+
+        return reserveRepository.save(reserve);
     }
 
 }

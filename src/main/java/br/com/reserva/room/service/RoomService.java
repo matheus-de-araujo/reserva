@@ -7,7 +7,8 @@ import br.com.reserva.category.repository.CategoryRepository;
 import br.com.reserva.user.domain.User;
 import br.com.reserva.user.repository.UserRepository;
 import br.com.reserva.reserve.domain.Reserve;
-import br.com.reserva.reserve.repository.ReserveRepository;
+import br.com.reserva.reserve.service.ReserveService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class RoomService {
     UserRepository userRepository;
 
     @Autowired
-    ReserveRepository ReserveRepository;
+    ReserveService reserveService;
 
     @Autowired
     public RoomService(RoomRepository roomRepository) {
@@ -72,19 +73,13 @@ public class RoomService {
         return ResponseEntity.ok(saved);
     }
 
-    public ResponseEntity<?> CreateReserve(Long roomId, Long userId, Reserve reserveDate){
+    public ResponseEntity<?> CreateReserve(Long roomId, Long userId, Reserve dateTime){
         Room room = roomRepository.findById(roomId).get();
         User user = userRepository.findById(userId).get();
-        Reserve reserve = new Reserve();
 
-        reserve.setBooking_date(reserveDate.getBooking_date());
-        reserve.setBooking_hour(reserveDate.getBooking_hour());
-        reserve.setUser(user);
-        reserve.setRoom(room);
-        Reserve saved = ReserveRepository.save(reserve);
+        Reserve saved = reserveService.CreateReserve(user, dateTime, room, null, null);
 
         room.setReserve(saved);
-
         roomRepository.save(room);
 
         return ResponseEntity.ok(saved);
