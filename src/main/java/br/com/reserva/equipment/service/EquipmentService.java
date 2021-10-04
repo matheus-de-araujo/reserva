@@ -1,9 +1,13 @@
 package br.com.reserva.equipment.service;
 
 import br.com.reserva.equipment.domain.Equipment;
-import br.com.reserva.category.repository.CategoryRepository;
-import br.com.reserva.category.domain.Category;
 import br.com.reserva.equipment.repository.EquipmentRepository;
+import br.com.reserva.category.domain.Category;
+import br.com.reserva.category.repository.CategoryRepository;
+import br.com.reserva.user.domain.User;
+import br.com.reserva.user.repository.UserRepository;
+import br.com.reserva.reserve.domain.Reserve;
+import br.com.reserva.reserve.repository.ReserveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,6 +22,12 @@ public class EquipmentService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    ReserveRepository ReserveRepository;
 
     @Autowired
     public EquipmentService(EquipmentRepository equipmentRepository) {
@@ -61,6 +71,22 @@ public class EquipmentService {
 
         equipment.setCategory(category);
         Equipment saved = equipmentRepository.save(equipment);
+
+        return ResponseEntity.ok(saved);
+    }
+
+    public ResponseEntity<?> CreateReserve(Long equipmentId, Long userId){
+        Equipment equipment = equipmentRepository.findById(equipmentId).get();
+        User user = userRepository.findById(userId).get();
+        Reserve reserve = new Reserve();
+
+        reserve.setUser(user);
+        reserve.setEquipment(equipment);
+        Reserve saved = ReserveRepository.save(reserve);
+
+        equipment.setReserve(saved);
+
+        equipmentRepository.save(equipment);
 
         return ResponseEntity.ok(saved);
     }

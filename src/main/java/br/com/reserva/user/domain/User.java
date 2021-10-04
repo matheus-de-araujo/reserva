@@ -17,6 +17,7 @@ public class User implements Serializable {
     private long id;
     private String name;
     private String cpf;
+
     @OneToMany(mappedBy = "user")
     private List<Reserve> reserves;
 

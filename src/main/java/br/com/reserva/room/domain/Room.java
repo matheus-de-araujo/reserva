@@ -2,6 +2,9 @@ package br.com.reserva.room.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.reserva.reserve.domain.Reserve;
 import br.com.reserva.category.domain.Category;
 import lombok.*;
 import java.io.Serializable;
@@ -21,7 +24,19 @@ public class Room implements Serializable {
     @ManyToOne (cascade = CascadeType.ALL)
     @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
+
+    @JsonIgnore
+    @OneToOne (cascade = CascadeType.ALL)
+    private Reserve reserve;
     
+    public Reserve getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(Reserve reserve) {
+        this.reserve = reserve;
+    }
+
     public long getRoom_number() {
         return room_number;
     }

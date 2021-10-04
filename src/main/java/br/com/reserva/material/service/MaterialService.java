@@ -1,9 +1,13 @@
 package br.com.reserva.material.service;
 
 import br.com.reserva.material.domain.Material;
-import br.com.reserva.category.domain.Category;
 import br.com.reserva.material.repository.MaterialRepository;
+import br.com.reserva.category.domain.Category;
 import br.com.reserva.category.repository.CategoryRepository;
+import br.com.reserva.user.domain.User;
+import br.com.reserva.user.repository.UserRepository;
+import br.com.reserva.reserve.domain.Reserve;
+import br.com.reserva.reserve.repository.ReserveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,12 @@ public class MaterialService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    ReserveRepository ReserveRepository;
 
     @Autowired
     public MaterialService(MaterialRepository materialRepository) {
@@ -59,6 +69,22 @@ public class MaterialService {
 
         material.setCategory(category);
         Material saved = materialRepository.save(material);
+
+        return ResponseEntity.ok(saved);
+    }
+
+    public ResponseEntity<?> CreateReserve(Long materialId, Long userId){
+        Material material = materialRepository.findById(materialId).get();
+        User user = userRepository.findById(userId).get();
+        Reserve reserve = new Reserve();
+
+        reserve.setUser(user);
+        reserve.setMaterial(material);
+        Reserve saved = ReserveRepository.save(reserve);
+
+        material.setReserve(saved);
+
+        materialRepository.save(material);
 
         return ResponseEntity.ok(saved);
     }

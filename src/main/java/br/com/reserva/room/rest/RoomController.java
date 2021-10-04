@@ -65,4 +65,15 @@ public class RoomController {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
+
+    @PutMapping(path = "/{roomId}/user/{userId}")
+    public @ResponseBody ResponseEntity<?> CreateMaterialReserve(
+            @PathVariable Long roomId, @PathVariable Long userId)
+        {
+        try {
+            return service.CreateReserve(roomId, userId);
+        } catch (Exception e) {
+            return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
 }

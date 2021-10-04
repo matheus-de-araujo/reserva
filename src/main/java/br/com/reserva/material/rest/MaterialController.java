@@ -66,4 +66,15 @@ public class MaterialController {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
+
+    @PutMapping(path = "/{materialId}/user/{userId}")
+    public @ResponseBody ResponseEntity<?> CreateMaterialReserve(
+            @PathVariable Long materialId, @PathVariable Long userId)
+        {
+        try {
+            return service.CreateReserve(materialId, userId);
+        } catch (Exception e) {
+            return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
 }

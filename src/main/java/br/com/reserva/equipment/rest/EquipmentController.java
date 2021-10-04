@@ -65,4 +65,15 @@ public class EquipmentController {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
+
+    @PutMapping(path = "/{equipmentId}/user/{userId}")
+    public @ResponseBody ResponseEntity<?> CreateMaterialReserve(
+            @PathVariable Long equipmentId, @PathVariable Long userId)
+        {
+        try {
+            return service.CreateReserve(equipmentId, userId);
+        } catch (Exception e) {
+            return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
 }

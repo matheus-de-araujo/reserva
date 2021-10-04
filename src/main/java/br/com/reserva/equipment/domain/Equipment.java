@@ -2,6 +2,9 @@ package br.com.reserva.equipment.domain;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.reserva.reserve.domain.Reserve;
 import br.com.reserva.category.domain.Category;
 import lombok.*;
 import java.io.Serializable;
@@ -22,10 +25,22 @@ public class Equipment implements Serializable {
     @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
 
+    @JsonIgnore
+    @OneToOne (cascade = CascadeType.ALL)
+    private Reserve reserve;
+
     public String getName() {
         return name;
     }
     
+    public Reserve getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(Reserve reserve) {
+        this.reserve = reserve;
+    }
+
     public Category getCategory() {
         return category;
     }

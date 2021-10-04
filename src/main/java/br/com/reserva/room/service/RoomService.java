@@ -1,9 +1,13 @@
 package br.com.reserva.room.service;
 
 import br.com.reserva.room.domain.Room;
-import br.com.reserva.category.domain.Category;
 import br.com.reserva.room.repository.RoomRepository;
+import br.com.reserva.category.domain.Category;
 import br.com.reserva.category.repository.CategoryRepository;
+import br.com.reserva.user.domain.User;
+import br.com.reserva.user.repository.UserRepository;
+import br.com.reserva.reserve.domain.Reserve;
+import br.com.reserva.reserve.repository.ReserveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +20,12 @@ public class RoomService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    ReserveRepository ReserveRepository;
 
     @Autowired
     public RoomService(RoomRepository roomRepository) {
@@ -58,6 +68,22 @@ public class RoomService {
 
         room.setCategory(category);
         Room saved = roomRepository.save(room);
+
+        return ResponseEntity.ok(saved);
+    }
+
+    public ResponseEntity<?> CreateReserve(Long roomId, Long userId){
+        Room room = roomRepository.findById(roomId).get();
+        User user = userRepository.findById(userId).get();
+        Reserve reserve = new Reserve();
+
+        reserve.setUser(user);
+        reserve.setRoom(room);
+        Reserve saved = ReserveRepository.save(reserve);
+
+        room.setReserve(saved);
+
+        roomRepository.save(room);
 
         return ResponseEntity.ok(saved);
     }
