@@ -2,6 +2,7 @@ package br.com.reserva.room.rest;
 
 import br.com.reserva.room.domain.Room;
 import br.com.reserva.room.service.RoomService;
+import br.com.reserva.reserve.domain.Reserve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
@@ -68,10 +69,10 @@ public class RoomController {
 
     @PutMapping(path = "/{roomId}/user/{userId}")
     public @ResponseBody ResponseEntity<?> CreateMaterialReserve(
-            @PathVariable Long roomId, @PathVariable Long userId)
+            @PathVariable Long roomId, @PathVariable Long userId, @RequestBody Reserve reserve)
         {
         try {
-            return service.CreateReserve(roomId, userId);
+            return service.CreateReserve(roomId, userId, reserve);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }

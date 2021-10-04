@@ -1,11 +1,7 @@
 package br.com.reserva;
 
-import br.com.reserva.reserve.domain.Reserve;
-import br.com.reserva.reserve.repository.ReserveRepository;
 import br.com.reserva.user.domain.User;
 import br.com.reserva.user.repository.UserRepository;
-
-import java.time.LocalDate;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +15,6 @@ public class ReservaApplication {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private ReserveRepository reserveRepository;
-
 	public static void main(String[] args) {
 		SpringApplication.run(ReservaApplication.class, args);
 	}
@@ -30,12 +23,9 @@ public class ReservaApplication {
 	InitializingBean sendDatabase() {
 		User user = new User();
 		user.setName("Matheus");
-		user.setCpf("75737302172");
+		user.setEmail("matheus.encode@gmail.com");
 		userRepository.save(user);
-		
-		Reserve reserve = new Reserve();
-		reserve.setBooking_date(LocalDate.of(2021,02,01));
-		reserveRepository.save(reserve);
+
 
 		return null;
 	}

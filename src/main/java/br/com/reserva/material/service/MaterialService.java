@@ -8,6 +8,7 @@ import br.com.reserva.user.domain.User;
 import br.com.reserva.user.repository.UserRepository;
 import br.com.reserva.reserve.domain.Reserve;
 import br.com.reserva.reserve.repository.ReserveRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -73,11 +74,13 @@ public class MaterialService {
         return ResponseEntity.ok(saved);
     }
 
-    public ResponseEntity<?> CreateReserve(Long materialId, Long userId){
+    public ResponseEntity<?> CreateReserve(Long materialId, Long userId, Reserve reserveDate){
         Material material = materialRepository.findById(materialId).get();
         User user = userRepository.findById(userId).get();
         Reserve reserve = new Reserve();
 
+        reserve.setBooking_date(reserveDate.getBooking_date());
+        reserve.setBooking_hour(reserveDate.getBooking_hour());
         reserve.setUser(user);
         reserve.setMaterial(material);
         Reserve saved = ReserveRepository.save(reserve);

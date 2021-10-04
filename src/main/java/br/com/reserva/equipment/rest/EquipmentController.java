@@ -2,6 +2,8 @@ package br.com.reserva.equipment.rest;
 
 import br.com.reserva.equipment.domain.Equipment;
 import br.com.reserva.equipment.service.EquipmentService;
+import br.com.reserva.reserve.domain.Reserve;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.ResponseEntity;
@@ -68,10 +70,10 @@ public class EquipmentController {
 
     @PutMapping(path = "/{equipmentId}/user/{userId}")
     public @ResponseBody ResponseEntity<?> CreateMaterialReserve(
-            @PathVariable Long equipmentId, @PathVariable Long userId)
+            @PathVariable Long equipmentId, @PathVariable Long userId, @RequestBody Reserve reserve)
         {
         try {
-            return service.CreateReserve(equipmentId, userId);
+            return service.CreateReserve(equipmentId, userId, reserve);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }

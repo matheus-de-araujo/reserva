@@ -16,7 +16,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-    private String cpf;
+    private String email;
 
     @OneToMany(mappedBy = "user")
     private List<Reserve> reserves;
@@ -33,12 +33,12 @@ public class User implements Serializable {
         this.reserves = reserves;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setName(String name) {

@@ -11,6 +11,7 @@ import br.com.reserva.room.domain.Room;
 import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +21,9 @@ public class Reserve implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+  
     private LocalDate booking_date;
+    private LocalTime booking_hour;
 
     @JsonIgnore
     @ManyToOne (cascade = CascadeType.ALL)
@@ -36,12 +39,25 @@ public class Reserve implements Serializable {
     @OneToOne (cascade = CascadeType.ALL)
     private Room room;
 
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public LocalTime getBooking_hour() {
+        return booking_hour;
+    }
+
+    public void setBooking_hour(LocalTime booking_hour) {
+        this.booking_hour = booking_hour;
+    }
+
     public LocalDate getBooking_date() {
         return booking_date;
     }
 
-    public Room getRoom() {
-        return room;
+    public void setBooking_date(LocalDate booking_date) {
+        this.booking_date = booking_date;
     }
 
     public void setRoom(Room room) {
@@ -72,9 +88,6 @@ public class Reserve implements Serializable {
         this.user = user;
     }
 
-    public void setBooking_date(LocalDate booking_date) {
-        this.booking_date = booking_date;
-    }
 
     public Long getId() {
         return id;

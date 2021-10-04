@@ -75,11 +75,13 @@ public class EquipmentService {
         return ResponseEntity.ok(saved);
     }
 
-    public ResponseEntity<?> CreateReserve(Long equipmentId, Long userId){
+    public ResponseEntity<?> CreateReserve(Long equipmentId, Long userId, Reserve reserveDate){
         Equipment equipment = equipmentRepository.findById(equipmentId).get();
         User user = userRepository.findById(userId).get();
         Reserve reserve = new Reserve();
 
+        reserve.setBooking_date(reserveDate.getBooking_date());
+        reserve.setBooking_hour(reserveDate.getBooking_hour());
         reserve.setUser(user);
         reserve.setEquipment(equipment);
         Reserve saved = ReserveRepository.save(reserve);

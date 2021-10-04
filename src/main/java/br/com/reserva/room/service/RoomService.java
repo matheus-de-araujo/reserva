@@ -72,11 +72,13 @@ public class RoomService {
         return ResponseEntity.ok(saved);
     }
 
-    public ResponseEntity<?> CreateReserve(Long roomId, Long userId){
+    public ResponseEntity<?> CreateReserve(Long roomId, Long userId, Reserve reserveDate){
         Room room = roomRepository.findById(roomId).get();
         User user = userRepository.findById(userId).get();
         Reserve reserve = new Reserve();
 
+        reserve.setBooking_date(reserveDate.getBooking_date());
+        reserve.setBooking_hour(reserveDate.getBooking_hour());
         reserve.setUser(user);
         reserve.setRoom(room);
         Reserve saved = ReserveRepository.save(reserve);
