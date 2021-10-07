@@ -6,6 +6,9 @@ import br.com.reserva.reserve.domain.Reserve;
 import br.com.reserva.user.domain.User;
 import br.com.reserva.room.domain.Room;
 import br.com.reserva.reserve.repository.ReserveRepository;
+
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -67,4 +70,22 @@ public class ReserveService {
         return reserveRepository.save(reserve);
     }
 
+    public ResponseEntity<?> validateDate(Reserve dateTime){
+        LocalDateTime minimum = LocalDateTime.now().plusDays(1);
+        LocalDateTime maximum = LocalDateTime.now().plusDays(31);
+        LocalDateTime reserve = LocalDateTime.of(
+        dateTime.getBooking_date().getYear(), 
+        dateTime.getBooking_date().getMonth(), 
+        dateTime.getBooking_date().getDayOfMonth(),
+        dateTime.getBooking_hour().getHour(),
+        dateTime.getBooking_hour().getMinute());
+
+        if(!reserve.isAfter(minimum)){
+            return ResponseEntity.status(400).body("A data da reserva precisa ser feita com pelo menos 1 dia de antecedência!");
+        }if(!reserve.isBefore(maximum)) {
+            return ResponseEntity.status(400).body("A data da reserva não pode ultrapassar 30 dias de antecedência!");
+        }else{
+            return ResponseEntity.ok("Tudo certo com a data!");
+        }
+    }
 }

@@ -10,6 +10,7 @@ import br.com.reserva.reserve.domain.Reserve;
 import br.com.reserva.reserve.service.ReserveService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -75,6 +76,11 @@ public class MaterialService {
     }
 
     public ResponseEntity<?> CreateReserve(Long materialId, Long userId, Reserve dateTime){
+        ResponseEntity<?> validate = reserveService.validateDate(dateTime);
+        if(validate.getStatusCode() != HttpStatus.OK) {
+            return validate;
+        }
+        
         Material material = materialRepository.findById(materialId).get();
         User user = userRepository.findById(userId).get();
 
