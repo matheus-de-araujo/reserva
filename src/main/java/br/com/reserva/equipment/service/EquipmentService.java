@@ -119,7 +119,7 @@ public class EquipmentService {
                 Reserve reserve = equipment.getReserve();
                 reserve.setExpired(true);
                 reserveRepository.save(reserve);
-                sendEmail();
+                sendEmail(equipment, reserve);
             }
         }
 
@@ -128,10 +128,11 @@ public class EquipmentService {
         return ResponseEntity.ok(saved);
     }
 
-    public void sendEmail(){
+    public void sendEmail(Equipment equipment, Reserve reserve){
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setText("Olá, o equipamento da sua reserva não está com status ok!!!");
-        message.setTo("matheus.encode@gmail.com");
+        message.setSubject("Problemas com a Reserva " + reserve.getId());
+        message.setText("Olá " + reserve.getUser().getName() + ", o equipamento: "+ equipment.getName() +", que consta na sua reserva está com o status " + equipment.getStatus() + ", por esse motivo a reserva se expirou!");
+        message.setTo(reserve.getUser().getEmail());
         message.setFrom("matheus.unialfa@gmail.com");
         mailSender.send(message);
     }
