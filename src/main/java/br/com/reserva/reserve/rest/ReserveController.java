@@ -39,9 +39,9 @@ public class ReserveController {
     }
 
     @PutMapping(path = "/edit/{id}")
-    public @ResponseBody ResponseEntity<?> update(@RequestBody Reserve reserve, @PathVariable(name = "id") Long id){
+    public @ResponseBody ResponseEntity<?> updateDate(@RequestBody Reserve reserve, @PathVariable(name = "id") Long id){
         try {
-            return service.update(reserve, id);
+            return service.updateDate(reserve, id);
         } catch (Exception e) {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }

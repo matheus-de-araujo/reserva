@@ -24,6 +24,8 @@ public class Reserve implements Serializable {
   
     private LocalDate booking_date;
     private LocalTime booking_hour;
+    private boolean retired;
+    private boolean expired;
 
     @JsonIgnore
     @ManyToOne (cascade = CascadeType.ALL)
@@ -35,6 +37,7 @@ public class Reserve implements Serializable {
 
     @OneToOne (cascade = CascadeType.ALL)
     private Material material;
+    private Long qty_material;
 
     @OneToOne (cascade = CascadeType.ALL)
     private Room room;
@@ -42,6 +45,30 @@ public class Reserve implements Serializable {
 
     public Room getRoom() {
         return room;
+    }
+
+    public Long getQty_material() {
+        return qty_material;
+    }
+
+    public void setQty_material(Long qty_material) {
+        this.qty_material = qty_material;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
+    public boolean isRetired() {
+        return retired;
+    }
+
+    public void setRetired(boolean retired) {
+        this.retired = retired;
     }
 
     public LocalTime getBooking_hour() {

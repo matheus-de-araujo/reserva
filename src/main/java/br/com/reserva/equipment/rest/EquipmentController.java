@@ -78,4 +78,15 @@ public class EquipmentController {
             return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
         }
     }
+
+    @PutMapping(path = "/status/{equipmentId}")
+    public @ResponseBody ResponseEntity<?> ChangeStatusEquipment(
+            @PathVariable Long equipmentId, @RequestBody Equipment status)
+        {
+        try {
+            return service.ChangeStatusEquipment(equipmentId, status);
+        } catch (Exception e) {
+            return (ResponseEntity<?>) ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
 }

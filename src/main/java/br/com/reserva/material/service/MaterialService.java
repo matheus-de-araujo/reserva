@@ -41,6 +41,8 @@ public class MaterialService {
 
 
     public ResponseEntity<?> save(Material material){
+        material.setAvailable_qty(material.getTotal_qty());
+        material.setReserved_qty((long) 0);
         Material saved = materialRepository.save(material);
         return ResponseEntity.ok(saved);
     }
@@ -86,10 +88,28 @@ public class MaterialService {
 
         Reserve saved = reserveService.CreateReserve(user, dateTime, null, null, material);
 
+        if(saved == null) {
+            return ResponseEntity.status(400).body("Não há essa quantidade disponível!");
+        }
+
         material.setReserve(saved);
 
         materialRepository.save(material);
 
         return ResponseEntity.ok(saved);
+    }
+
+    public void setReservedQty(Long qty, Material material){
+        material.setAvailable_qty(material.getAvailable_qty() - qty);
+        material.setReserved_qty(material.getReserved_qty() + qty);
+
+        materialRepository.save(material);
+    }
+
+    public void setExpiredQty(Long qty, Material material){
+        material.setReserved_qty(material.getReserved_qty() - qty);
+        material.setAvailable_qty(material.getAvailable_qty() + qty);
+
+        materialRepository.save(material);
     }
 }
