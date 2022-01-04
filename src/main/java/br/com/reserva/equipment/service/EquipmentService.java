@@ -10,7 +10,6 @@ import br.com.reserva.reserve.domain.Reserve;
 import br.com.reserva.reserve.service.ReserveService;
 import br.com.reserva.reserve.repository.ReserveRepository;
 
-import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
